@@ -40,11 +40,15 @@ repositories {
 }
 
 dependencies {
+    compile group: 'joda-time', name: 'joda-time', version: '2.9'
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
     compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+    compile("org.webjars:bootstrap:3.3.7")
     runtime("com.h2database:h2")
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("com.nhaarman:mockito-kotlin:1.5.0")
+    testCompile("org.jetbrains.kotlin:kotlin-test:${kotlinVersion}")
 }

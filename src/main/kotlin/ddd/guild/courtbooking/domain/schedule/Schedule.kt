@@ -30,7 +30,7 @@ class Schedule {
         if (!bookings.filter { it != old }.any { it.conflictsWith(new) }) {
             bookings -= old
             bookings += new
-            if (old.slot != new.slot) timeChanged(new)
+            if (old.interval != new.interval) timeChanged(new)
             if (old.courtNumber != new.courtNumber) courtChanged(new)
         }
     }
