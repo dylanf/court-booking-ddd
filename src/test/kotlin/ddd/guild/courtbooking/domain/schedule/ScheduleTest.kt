@@ -38,7 +38,9 @@ class ScheduleTest {
     private val slot1_court1_member1 = Booking(Slot(today, period1), 1, "mem-1")
     private val slot1_court1_member2 = Booking(Slot(today, period1), 1, "mem-2")
     private val slot2_court1_member1 = Booking(Slot(today, period2), 1, "mem-1")
+    private val slot2_court2_member1 = Booking(Slot(today, period2), 2, "mem-1")
     private val slot1_court2_member1 = Booking(Slot(today, period1), 2, "mem-1")
+    private val slot1_court2_member2 = Booking(Slot(today, period1), 2, "mem-2")
 
     @Test
     fun `a member can create a booking`(){
@@ -88,6 +90,31 @@ class ScheduleTest {
 
         assertThat(schedule.bookings).doesNotContain(slot1_court1_member1)
         assertThat(cancelledBooking).isEqualTo(slot1_court1_member1)
+    }
+
+    @Test
+    fun `a member cannot move a booking to conflict with an existing booking`() {
+        schedule.createBooking(slot1_court1_member1)
+        schedule.createBooking(slot1_court2_member2)
+
+        schedule.updateBooking(slot1_court1_member1, slot1_court2_member1)
+
+        assertThat(changedCourt).isNull()
+        assertThat(schedule.bookings).doesNotContain(slot1_court2_member1)
+        assertThat(schedule.bookings).contains(slot1_court1_member1)
+        assertThat(schedule.bookings).contains(slot1_court2_member2)
+    }
+
+    @Test
+    fun `a member cannot move a booking to a time where they have another booking`() {
+        schedule.createBooking(slot1_court1_member1)
+        schedule.createBooking(slot2_court2_member1)
+
+        schedule.updateBooking(slot1_court1_member1, slot2_court1_member1)
+
+        assertThat(changedCourt).isNull()
+        assertThat(schedule.bookings).doesNotContain(slot2_court1_member1)
+        assertThat(schedule.bookings).contains(slot2_court2_member1)
     }
 
     @Test
