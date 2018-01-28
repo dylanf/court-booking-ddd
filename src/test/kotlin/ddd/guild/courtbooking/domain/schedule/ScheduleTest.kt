@@ -3,6 +3,8 @@ package ddd.guild.courtbooking.domain.schedule
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
+import java.time.LocalDate
+import java.time.LocalTime
 
 class ScheduleTest {
     var schedule = Schedule()
@@ -12,6 +14,10 @@ class ScheduleTest {
     var cancelledBooking: Booking? = null
     var unconfirmedBooking: Booking? = null
     var elapsedBooking: Booking? = null
+
+    val today = LocalDate.now()
+    val period1 = LocalTime.of(9,0)
+    val period2 = LocalTime.of(9,40)
 
     @Before
     fun setup() {
@@ -29,12 +35,10 @@ class ScheduleTest {
         elapsedBooking = null
     }
 
-    private val slot1_court1_member1 = Booking(Slot(1, 1), 1, "mem-1")
-    private val slot1_court1_member2 = Booking(Slot(1, 1), 1, "mem-2")
-    private val slot2_court1_member1 = Booking(Slot(1, 2), 1, "mem-1")
-    private val slot2_court2_member1 = Booking(Slot(1, 2), 2, "mem-1")
-    private val slot1_court2_member1 = Booking(Slot(1, 1), 2, "mem-1")
-    private val slot1_court2_member2 = Booking(Slot(1, 1), 2, "mem-2")
+    private val slot1_court1_member1 = Booking(Slot(today, period1), 1, "mem-1")
+    private val slot1_court1_member2 = Booking(Slot(today, period1), 1, "mem-2")
+    private val slot2_court1_member1 = Booking(Slot(today, period2), 1, "mem-1")
+    private val slot1_court2_member1 = Booking(Slot(today, period1), 2, "mem-1")
 
     @Test
     fun `a member can create a booking`(){
