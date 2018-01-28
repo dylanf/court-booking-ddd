@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Court Booking DDD</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" type="text/css"
+          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"
+          href="../../css/main.css" />
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Spring Boot</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="starter-template">
+        <h1>Court Booking DDD</h1>
+        <h2>
+            <span>Schedule</span>
+        </h2>
+
+        <form action="#" th:action="@{/}" th:object="${bookingCmd}" method="post">
+            <!--<p>Start Time: <input type="datetime-local" th:field="*{start}" /></p>-->
+            <p>Start Time: <input type="text" th:field="*{start}" /></p>
+            <!--<p>End Time: <input type="datetime-local" th:field="*{end}" /></p>            <p>Start Time: <input type="datetime-local" th:field="*{start}" /></p>-->
+            <p>End Time: <input type="text" th:field="*{end}" /></p>
+            <p>Court #: <input type="number" th:field="*{court}"/></p>
+            <p>Member #: <input type="text" th:field="*{member}"/></p>
+            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        </form>
+
+        <ul>
+            <th:block>
+                <li th:each="item : ${bookings}" th:text="${item}">Item Description</li>
+            </th:block>
+        </ul>
+    </div>
+
+</div>
+<!-- /.container -->
+
+<script type="text/javascript"
+        src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>
