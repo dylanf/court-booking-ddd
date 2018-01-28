@@ -45,38 +45,13 @@ class ScheduleTest {
     }
 
     @Test
-    fun `two members cannot book the same time on the same court`(){
+    fun `a member cannot create a booking that causes a conflict`() {
         schedule.createBooking(slot1_court1_member1)
+
         schedule.createBooking(slot1_court1_member2)
 
+        assertThat(schedule.bookings).contains(slot1_court1_member1)
         assertThat(schedule.bookings).doesNotContain(slot1_court1_member2)
-    }
-
-    @Test
-    fun `a member cannot book two courts at the same time`() {
-        schedule.createBooking(slot1_court1_member1)
-        schedule.createBooking(slot1_court2_member1)
-
-        assertThat(schedule.bookings).doesNotContain(slot1_court2_member1)
-    }
-
-    @Test
-    fun `different members can book different courts at the same time`() {
-        schedule.createBooking(slot1_court1_member1)
-        schedule.createBooking(slot1_court2_member2)
-
-        assertThat(schedule.bookings).contains(slot1_court1_member1)
-        assertThat(schedule.bookings).contains(slot1_court2_member2)
-    }
-
-    @Test
-    fun `a member can book the same court at different times`() {
-        schedule.createBooking(slot1_court1_member1)
-
-        schedule.createBooking(slot2_court1_member1)
-
-        assertThat(schedule.bookings).contains(slot1_court1_member1)
-        assertThat(schedule.bookings).contains(slot2_court1_member1)
     }
 
     @Test
@@ -99,31 +74,6 @@ class ScheduleTest {
         assertThat(changedTime).isEqualTo(slot2_court1_member1)
         assertThat(schedule.bookings).doesNotContain(slot1_court1_member1)
         assertThat(schedule.bookings).contains(slot2_court1_member1)
-    }
-
-    @Test
-    fun `a member cannot move a booking to conflict with an existing booking`() {
-        schedule.createBooking(slot1_court1_member1)
-        schedule.createBooking(slot1_court2_member2)
-
-        schedule.updateBooking(slot1_court1_member1, slot1_court2_member1)
-
-        assertThat(changedCourt).isNull()
-        assertThat(schedule.bookings).doesNotContain(slot1_court2_member1)
-        assertThat(schedule.bookings).contains(slot1_court1_member1)
-        assertThat(schedule.bookings).contains(slot1_court2_member2)
-    }
-
-    @Test
-    fun `a member cannot move a booking to a time where they have another booking`() {
-        schedule.createBooking(slot1_court1_member1)
-        schedule.createBooking(slot2_court2_member1)
-
-        schedule.updateBooking(slot1_court1_member1, slot2_court1_member1)
-
-        assertThat(changedCourt).isNull()
-        assertThat(schedule.bookings).doesNotContain(slot2_court1_member1)
-        assertThat(schedule.bookings).contains(slot2_court2_member1)
     }
 
     @Test
