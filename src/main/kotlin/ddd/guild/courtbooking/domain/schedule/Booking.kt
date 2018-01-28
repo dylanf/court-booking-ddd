@@ -18,8 +18,8 @@ data class Booking(
             matchCourtAndTime(this, other) || matchTimeAndMember(this, other)
 
     private fun matchTimeAndMember(a: Booking, b: Booking) =
-            a.interval == b.interval && b.memberId == a.memberId
+            a.interval.overlaps(b.interval) && b.memberId == a.memberId
 
     private fun matchCourtAndTime(a: Booking, b: Booking) =
-            a.interval == b.interval && a.courtNumber == b.courtNumber
+            a.interval.overlaps(b.interval) && a.courtNumber == b.courtNumber
 }
